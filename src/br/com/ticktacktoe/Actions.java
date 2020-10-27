@@ -45,8 +45,8 @@ public class Actions {
 				board.changeValueMold(keyboard.getRow(),keyboard.getColumn(),this.getMarked());
 				board.createMold();
 				board.PrintMold();
-				check.checkIsWinner(board,this);
-				check.checkIsTied(board,this);
+				check.isWinner(board,this);
+				check.isTied(board,this);
 				this.nextTurn();
 			}else {
 				System.out.println("Jogada Inválida, digite novamente!");

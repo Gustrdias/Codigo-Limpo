@@ -10,21 +10,21 @@ public class Check {
 		this.setTied(false);
 		this.setWinner(false);
 	}
-	public void checkIsWinner(Board board,Actions actions) {
-		this.checkRowIsWin(board,actions.getMarked());
-		this.checkColumnIsWin(board,actions.getMarked());
-		this.checkLeftDiagonalWin(board, actions.getMarked());
-		this.checkRightDiagonalWin(board, actions.getMarked());
+	public void isWinner(Board board,Actions actions) {
+		this.rowIsWin(board,actions.getMarked());
+		this.columnIsWin(board,actions.getMarked());
+		this.leftDiagonalWin(board, actions.getMarked());
+		this.rightDiagonalWin(board, actions.getMarked());
 		if(this.isWinner()) {
 			System.out.println("O jogador "+actions.getPlayer()+" ganhou!");
 			actions.setEndGame(true);
 		}
 	}
-	public void checkRowIsWin(Board board,String marked) {
+	public void rowIsWin(Board board,String marked) {
 		for (int row = 0; row < Board.MAX_POSITIONS; row++) {
 			this.resetCount();
 			this.walksColumn(board,marked,row);
-			if(this.checkWin())
+			if(this.winPlayer())
 				return;
 		}
 	}
@@ -35,13 +35,13 @@ public class Check {
 		     }
 		 }
 	}
-	public void checkColumnIsWin(Board board,String marked) {
+	public void columnIsWin(Board board,String marked) {
 		if(this.isWinner())
 			return;
         for (int column = 0; column < Board.MAX_POSITIONS; column++) {
         	this.resetCount();
         	this.walksRow(board,marked,column);
-			if(checkWin())
+			if(winPlayer())
 				return;
 		}
 	}
@@ -58,14 +58,14 @@ public class Check {
 	public void resetCount() {
 		this.setCount(0);
 	}
-	public boolean checkWin() {
+	public boolean winPlayer() {
 		if (this.getCount() == Board.MAX_POSITIONS) {
 			this.setWinner(true);
 			return true;
 		}
 		return false;
 	}
-	public void checkRightDiagonalWin(Board board,String marked) {
+	public void rightDiagonalWin(Board board,String marked) {
 		if(this.isWinner())
 			return;
 		this.resetCount();
@@ -74,9 +74,9 @@ public class Check {
 				this.incrementCount();
 			}
 		}
-		this.checkWin();
+		this.winPlayer();
 	}
-	public void checkLeftDiagonalWin(Board board,String marked) {
+	public void leftDiagonalWin(Board board,String marked) {
 		if(this.isWinner())
 			return;
 		this.resetCount();
@@ -87,22 +87,22 @@ public class Check {
 			}
 			posDiagonalColumn--; 
 		}
-		this.checkWin();
+		this.winPlayer();
 	}
 	
-	public void checkIsTied(Board board,Actions actions) {
-		checkPlaysRow(board);
+	public void isTied(Board board,Actions actions) {
+		playsRow(board);
 		if(this.isTied()) {
 			System.out.println("O jogo terminou empatado!");
 			actions.setEndGame(true);
 		}
 	}
-	public void checkPlaysRow(Board board) {
+	public void playsRow(Board board) {
 		for (int row = 0; row < Board.MAX_POSITIONS; row++) {
-			this.checkPlaysColumns(board, row);
+			this.playsColumns(board, row);
 		 }
 	}
-	public void checkPlaysColumns(Board board,int row) {
+	public void playsColumns(Board board,int row) {
 		for (int column = 0; column < Board.MAX_POSITIONS; column++) {
 			this.isTied();
 		}
